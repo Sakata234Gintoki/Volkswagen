@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>Generative AI Assistant</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            transition: background 1s ease-in-out;
+            /* Smooth transition for background change */
+            position: relative;
+            background: url('https://images6.alphacoders.com/106/thumb-1920-1064138.jpg') no-repeat center center fixed;
+            /* Directly set background image */
+            background-size: cover;
+        }
+
+        /* Lazy-loaded car image */
+
+
+        /* Container for content */
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.7);
+            /* Semi-transparent background for readability */
+            color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        header {
+            background: #e7f1f8;
+            /* Light background for header */
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #2e3d49;
+            /* Dark blue Volkswagen theme */
+        }
+
+        header p {
+            font-size: 16px;
+            color: #2e3d49;
+        }
+
+        /* Main form styling */
+        main {
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+            background: #f4f4f4;
+        }
+
+        textarea:focus {
+            border-color: #2575fc;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2e3d49;
+            /* Volkswagen blue */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #2575fc;
+        }
+
+        /* Response box styling */
+        #response-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: #ffffff;
+            color: #333333;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #response-container h2 {
+            margin-top: 0;
+            color: #2575fc;
+        }
+
+        #response {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #aaaaaa;
+            background: #f7f9fc;
+        }
+
+        footer a {
+            color: #2575fc;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 24px;
+            }
+
+            header p {
+                font-size: 14px;
+            }
+
+            button {
+                padding: 10px;
+            }
+        }
+
+        /* Floating Chatbot Button (Bottom Right) */
+        .chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #2575fc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            transition: background-color 0.3s ease;
+        }
+
+        .chatbot-button:hover {
+            background-color: #2e3d49;
+        }
+
+        .chatbot-button i {
+            font-size: 30px;
+        }
+
+        /* Left Side Icon */
+        .left-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: #2e3d49;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+        }
+
+        .left-icon:hover {
+            background-color: #2575fc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Generative AI Assistant</h1>
+            <p>Your Personalized AI Companion for Vehicle Recommendations</p>
+        </header>
+        <main>
+            <textarea id="query" rows="4" placeholder="Ask your question here,"></textarea>
+            <button id="submit">Get Response</button>
+            <div id="response-container" style="display:none;">
+                <h2>Response:</h2>
+                <p id="response"></p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chatbot Button -->
+    <div class="chatbot-button">
+        <i class="fa fa-comment"></i> <!-- FontAwesome icon for chatbot -->
+    </div>
+
+    <!-- Left Side Icon -->
+    <div class="left-icon">
+        <i class="fa fa-info-circle"></i> <!-- FontAwesome icon for info -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                const query = $("#query").val();
+                if (!query) {
+                    alert("Please enter a query!");
+                    return;
+                }
+                $("#response-container").show();
+                $("#response").text("Generating response...");
+                $.ajax({
+                    url: "/get_response", // Your Flask endpoint for handling the query
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ query: query }),
+                    success: function (response) {
+                        $("#response").text(response.response);
+                    },
+                    error: function () {
+                        $("#response").text("Error generating response. Try again!");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
